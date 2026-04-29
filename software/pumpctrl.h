@@ -1,3 +1,5 @@
+#pragma once
+
 /* 
  * File:   pumpctrl.h
  * Author: lydia
@@ -43,11 +45,12 @@ extern "C" {
     uint8_t activePeriod3;
     uint8_t activePeriod4;
     
-    //This is in hours
+    //This is in hours and controls the inactive pump period
     uint8_t inactivePeriod1;
     uint8_t inactivePeriod2;
     uint8_t inactivePeriod3;
     uint8_t inactivePeriod4;
+    
     
     
 

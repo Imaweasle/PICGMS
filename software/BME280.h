@@ -35,6 +35,7 @@ typedef struct {
     unsigned char h3;
     short h4;
     short h5;
+    char h6;
 }BME280Params; 
     
 
@@ -67,6 +68,12 @@ int setMode(uint8_t setting);
 
 int getId();
 
+
+// Returns humidity in %RH as unsigned 32 bit integer in Q22.10 format (22 integer and 10
+//fractional bits).
+// Output value of ?47445? represents 47445/1024 = 46.333 %RH
+
+uint32_t getHum();
 
 
 int32_t getTemp();
@@ -105,7 +112,7 @@ int getCalibData();
     
     
     
-    
+int32_t tFine;
     
     
     

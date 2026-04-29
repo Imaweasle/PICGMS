@@ -18,7 +18,7 @@ extern "C" {
 #endif
    
     
-    volatile int timePassed_ms;
+    volatile unsigned int timePassed_ms;
     
     
     typedef struct {

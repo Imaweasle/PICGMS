@@ -43,6 +43,7 @@ void reset(time_t* time) {
 
 void update(time_t* time) {
    time->ms += timePassed_ms;
+   timePassed_ms = 0;
    while(time->ms >= 1000) {
        time->s++;
        time->ms -= 1000;
