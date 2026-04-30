@@ -19,37 +19,15 @@
 extern "C" {
 #endif
 
-    time_t universalClock;
+    
     
     void pumpInit();
     
     void runPumpMaintenance();
     
     
-    //Times set for next pump Toggle
-    time_t pumpT1;
-    time_t pumpT2;
-    time_t pumpT3;
-    time_t pumpT4;
-    
-    //these will be set false in pumpinit();
-    bool pumpState1;
-    bool pumpState2;
-    bool pumpState3;
-    bool pumpState4;
     
     
-    //How long in seconds each pump remains active
-    uint8_t activePeriod1;
-    uint8_t activePeriod2;
-    uint8_t activePeriod3;
-    uint8_t activePeriod4;
-    
-    //This is in hours and controls the inactive pump period
-    uint8_t inactivePeriod1;
-    uint8_t inactivePeriod2;
-    uint8_t inactivePeriod3;
-    uint8_t inactivePeriod4;
     
     
     
