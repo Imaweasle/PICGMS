@@ -18,8 +18,7 @@
 
 static const char ROW_ADDR[4] = { 0x00, 0x40, 0x14, 0x54 };
 
-// --- Private Hardware I2C Functions ---
-
+// makes sure all values are clear or timer is zero 
 static void i2c_idle(void) {
     unsigned int timeout = 10000;
     while ((I2C1CONbits.SEN  || I2C1CONbits.RSEN  ||
@@ -48,14 +47,14 @@ static void i2c_write_byte(unsigned char byte) {
     while (I2C1STATbits.TRSTAT); // Wait for shift register to empty
 }
 
-// --- Private PCF8574 Formatting Functions ---
+// Formatting Functions
 
 static unsigned char backlight_val = LCD_BACKLIGHT; 
 
 static void pcf8574_write(unsigned char data) {
     i2c_start();
     i2c_write_byte((LCD_I2C_ADDR << 1) | 0x00); 
-    i2c_write_byte(data | backlight_val); // <-- Now uses the variable
+    i2c_write_byte(data | backlight_val); 
     i2c_stop();
 }
 
@@ -72,7 +71,7 @@ static void lcd_write(unsigned char value, unsigned char mode) {
     lcd_write_nibble((value << 4) & 0xF0, mode); // Low nibble
 }
 
-// --- Public LCD Functions ---
+// Public LCD Functions
 
 void lcd_cmd(char command) {
     lcd_write(command, 0); // RS = 0 for command
@@ -100,14 +99,14 @@ void lcd_printStr(const char *str) {
     }
 }
 
-// 1. Print Numbers
+// Print Numbers
 void lcd_printInt(int number) {
     char buffer[16]; // Buffer to hold the converted number string
     sprintf(buffer, "%d", number); 
     lcd_printStr(buffer);
 }
 
-// 2. Backlight Control
+// Backlight Control
 void lcd_backlight(unsigned char state) {
     if (state) {
         backlight_val = LCD_BACKLIGHT;
@@ -117,7 +116,7 @@ void lcd_backlight(unsigned char state) {
     pcf8574_write(0); // Send a dummy byte to update the physical pin immediately
 }
 
-// 3. Scrolling Functions
+// Scrolling Functions
 void lcd_shiftLeft(void) {
     lcd_cmd(0x18); // 0x18 is the HD44780 command to shift display left
 }
@@ -126,9 +125,9 @@ void lcd_shiftRight(void) {
     lcd_cmd(0x1C); // 0x1C is the HD44780 command to shift display right
 }
 
-// 4. Custom Characters
+// Custom Characters
 void lcd_createChar(unsigned char location, const unsigned char charmap[]) {
-    location &= 0x07; // We only have 8 memory slots (0 to 7)
+    location &= 0x07; // memory slots (0 to 7)
     lcd_cmd(0x40 | (location << 3)); // Command to set CGRAM address
     for (int i = 0; i < 8; i++) {
         lcd_printChar(charmap[i]);   // Write the 8 rows of pixels
@@ -136,7 +135,16 @@ void lcd_createChar(unsigned char location, const unsigned char charmap[]) {
 }
 
 void lcd_init(void) {   
-    
+    // Configure PIC I2C Hardware
+    I2C1CONbits.I2CEN = 0;          
+    TRISBbits.TRISB8 = 1;    // SCL Input 
+    TRISBbits.TRISB9 = 1;    // SDA Input 
+    I2C1BRG = I2C1BRG_VALUE;  
+    IFS1bits.MI2C1IF = 0;          
+    IEC1bits.MI2C1IE = 0;       
+    I2C1STAT = 0;               
+    I2C1CONbits.I2CEN = 1;          
+
     __delay_ms(50); // Wait for LCD power to stabilize
 
     // 4-bit Initialization Sequence
