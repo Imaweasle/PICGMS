@@ -1,9 +1,41 @@
 
 #include "pumpctrl.h"
 
-void pumpInit() {
+
+
+time_t universalClock;
+
+//Times set for next pump Toggle
+time_t pumpT1;
+time_t pumpT2;
+time_t pumpT3;
+time_t pumpT4;
     
-    universalClock.reset();
+
+
+//these will be set false in pumpinit();
+bool pumpState1;
+bool pumpState2;
+bool pumpState3;
+bool pumpState4;
+    
+    
+//How long in seconds each pump remains active
+uint8_t activePeriod1;
+uint8_t activePeriod2;
+uint8_t activePeriod3;
+uint8_t activePeriod4;
+    
+//This is in hours and controls the inactive pump period
+uint8_t inactivePeriod1;
+uint8_t inactivePeriod2;
+uint8_t inactivePeriod3;
+uint8_t inactivePeriod4;
+
+
+void pumpInit() {
+    reset(&universalClock);
+    
     
     reset(&pumpT1);
     reset(&pumpT2);
@@ -36,45 +68,45 @@ void runPumpMaintenance() {
         
         if(pumpState1) {
             //requires pump to be on and we are turning it off
-            incTime(&pumpT1, 0, 0, 0, inactivePeriod1, 0)
+            incTime(&pumpT1, 0, 0, 0, inactivePeriod1, 0);
         } else {
             //Pump is off we turn it on for active period
-           incTime(&pumpT1, 0, activePeriod1, 0, 0, 0) 
+           incTime(&pumpT1, 0, activePeriod1, 0, 0, 0); 
         }
-        pumpState1 = !pumpState1
+        pumpState1 = !pumpState1;
     }
     if(timeCompare(&universalClock, &pumpT2)) {
         
         if(pumpState2) {
             //requires pump to be on and we are turning it off
-            incTime(&pumpT2, 0, 0, 0, inactivePeriod2, 0)
+            incTime(&pumpT2, 0, 0, 0, inactivePeriod2, 0);
         } else {
             //Pump is off we turn it on for active period
-           incTime(&pumpT2, 0, activePeriod2, 0, 0, 0) 
+           incTime(&pumpT2, 0, activePeriod2, 0, 0, 0); 
         }
-        pumpState2 = !pumpState2
+        pumpState2 = !pumpState2;
     }
     if(timeCompare(&universalClock, &pumpT3)) {
         
         if(pumpState3) {
             //requires pump to be on and we are turning it off
-            incTime(&pumpT3, 0, 0, 0, inactivePeriod3, 0)
+            incTime(&pumpT3, 0, 0, 0, inactivePeriod3, 0);
         } else {
             //Pump is off we turn it on for active period
-           incTime(&pumpT3, 0, activePeriod3, 0, 0, 0) 
+           incTime(&pumpT3, 0, activePeriod3, 0, 0, 0); 
         }
-        pumpState3 = !pumpState3
+        pumpState3 = !pumpState3;
     }
     if(timeCompare(&universalClock, &pumpT4)) {
         
         if(pumpState4) {
             //requires pump to be on and we are turning it off
-            incTime(&pumpT4, 0, 0, 0, inactivePeriod4, 0)
+            incTime(&pumpT4, 0, 0, 0, inactivePeriod4, 0);
         } else {
             //Pump is off we turn it on for active period
-           incTime(&pumpT4, 0, activePeriod4, 0, 0, 0) 
+           incTime(&pumpT4, 0, activePeriod4, 0, 0, 0); 
         }
-        pumpState4 = !pumpState4
+        pumpState4 = !pumpState4;
     }
     
     //We assume this was setup correctly

@@ -21,7 +21,7 @@ extern "C" {
 
 #define timeoutTime 10
 
-volatile int elapsedTime_ms;
+
 
 void startTimer();
 
@@ -31,7 +31,7 @@ int startSignal();
 
 int endSignal();
 
-int i2cOut(uint8_t addr, uint8_t cmd, uint8_t data, uint8_t packetSize, bool rnw);
+int i2cOut(uint8_t addr, uint8_t cmd, uint8_t* data, uint8_t packetSize);
 
 int i2cInit();
 

@@ -9,8 +9,13 @@
 #include "i2cBus.h" 
 #include "stdint.h"
 #include "stdbool.h"
+
 #ifndef BME280_H
 #define	BME280_H
+
+#define NORMAL 1
+#define SLEEP 0
+#define FORCED 2
 
 #ifdef	__cplusplus
 extern "C" {
@@ -48,13 +53,6 @@ int initBME280();
 
 
 
-#define NORMAL 1
-#define SLEEP 0
-#define FORCED 2
-
-uint8_t mode = 0;
-
-uint8_t configBuf = 0;
 
 
 /**
@@ -63,10 +61,11 @@ uint8_t configBuf = 0;
  * @param setting 0 for sleep, 1 for normal, 2 for forced
  * @return 
  */
-int setMode(uint8_t setting);
+
+void setMode(uint8_t setting);
     
 
-int getId();
+uint8_t getId();
 
 
 // Returns humidity in %RH as unsigned 32 bit integer in Q22.10 format (22 integer and 10
@@ -112,7 +111,7 @@ int getCalibData();
     
     
     
-int32_t tFine;
+
     
     
     

@@ -5,7 +5,7 @@
 
 
 
-
+volatile unsigned int timePassed_ms;
 
 
 void __attribute__((__interrupt__,__auto_psv__)) _T2Interrupt(void)
@@ -34,7 +34,7 @@ void timeInit() {
 
 void reset(time_t* time) {
     time->ms = 0;
-    time->seconds = 0;
+    time->s = 0;
     time->minutes = 0;
     time->hours = 0;
     time->days = 0;
@@ -56,7 +56,7 @@ void update(time_t* time) {
        time->hours++;
        time->minutes -= 60;
    }
-   if(hours >= 24) {
+   if(time->hours >= 24) {
        time->days++;
        time->hours -= 24;
    }

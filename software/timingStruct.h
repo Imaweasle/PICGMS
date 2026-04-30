@@ -10,7 +10,7 @@
 #define	TIMINGSTRUCT_H
 
 #include "stdint.h"
-#incldue "stdbool.h"
+#include "stdbool.h"
 #include "xc.h"
 
 #ifdef	__cplusplus
@@ -18,7 +18,7 @@ extern "C" {
 #endif
    
     
-    volatile unsigned int timePassed_ms;
+    
     
     
     typedef struct {

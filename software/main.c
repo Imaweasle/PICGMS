@@ -11,6 +11,11 @@
 #include "xc.h"
 #include "stdio.h"
 #include "delay.h"
+#include "BME280.h"
+#include "pumpctrl.h"
+#include "CN0296D.h"
+#include "i2cBus.h"
+
 
 
 
@@ -43,14 +48,7 @@
 
 
 
-void sleep_ms(int val) {
-    int i = 0;
-    for(i = 0; i < val; i++) {
-        delay1000();
-    }
-}
 
-unsigned short highRes = 1; 
 
 void setup() {
     CLKDIVbits.RCDIV = 0;
@@ -72,8 +70,26 @@ void setup() {
 int main(void) {
     
     setup();
+    i2cInit();
     
-
+    
+    lcd_init();
+    
+    
+    lcd_setCursor(0,0);
+    
+    char string[20];
+    
+    initBME280();
+    
+    pumpInit();
+    
+    uint8_t id = getId();
+    
+    sprintf(string, "BME ID FOUND: %X", id);
+    
+    lcd_printStr(string);
+    
     while(1) {
         
     }

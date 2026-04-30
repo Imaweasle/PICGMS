@@ -19,7 +19,7 @@
 
 
 
-
+volatile int elapsedTime_ms;
 
 
 
@@ -103,7 +103,7 @@ int endSignal() {
     return 0;
 }
 
-int i2cOut(uint8_t addr, uint8_t cmd, uint8_t data, uint8_t packetSize) {
+int i2cOut(uint8_t addr, uint8_t cmd, uint8_t* data, uint8_t packetSize) {
     
     int buf = startSignal();
     if(buf) {
@@ -128,6 +128,7 @@ int i2cOut(uint8_t addr, uint8_t cmd, uint8_t data, uint8_t packetSize) {
     endTimer();
     
     _MI2C1IF = 0;
+    int i = 0;
     
     while(packetSize) {
 
@@ -146,7 +147,7 @@ int i2cOut(uint8_t addr, uint8_t cmd, uint8_t data, uint8_t packetSize) {
 
         _MI2C1IF = 0;
 
-        I2C1TRN = data;
+        I2C1TRN = data[i];
         startTimer();
         while(!(_MI2C1IF && !I2C1STATbits.TRSTAT)) {
             if(elapsedTime_ms > timeoutTime) {
@@ -161,6 +162,7 @@ int i2cOut(uint8_t addr, uint8_t cmd, uint8_t data, uint8_t packetSize) {
         _MI2C1IF = 0;
         
         packetSize--;
+        i++;
     }
     
     buf = endSignal();
