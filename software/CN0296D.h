@@ -12,30 +12,30 @@
 extern "C" {
 #endif
 
-// --- Configuration ---
-// Adjust these to match your hardware setup
+// Config
 #define LCD_I2C_ADDR    0x27
-    // Default for PCF8574T (Use 0x3F for PCF8574AT)
 #define I2C1BRG_VALUE   157   // 100 kHz at FCY=16MHz
 #define LCD_ROWS        4
 #define LCD_COLS        20
 
-// --- PCF8574T Pin Mapping ---
+// PCF8574T Pin Mapping
 #define LCD_BACKLIGHT   0x08
 #define LCD_NOBACKLIGHT 0x00
 #define EN_PIN          0x04
 #define RW_PIN          0x02
 #define RS_PIN          0x01
 
-// --- Function Prototypes ---
+// Used to sets up the LCD
 void lcd_init(void);
 void lcd_cmd(char command);
 void lcd_clear(void);
 void lcd_setCursor(char x, char y);
+
+// prints a character or string respectivly
 void lcd_printChar(char myChar);
 void lcd_printStr(const char *str);
 
-// Print an integer (great for sensor data and counters)
+// Print sensor data
 void lcd_printInt(int number);
 
 // Turn the backlight on (1) or off (0)
