@@ -33,6 +33,8 @@ uint8_t inactivePeriod3;
 uint8_t inactivePeriod4;
 
 
+
+
 void pumpInit() {
     reset(&universalClock);
     
@@ -47,15 +49,15 @@ void pumpInit() {
     pumpState3 = 0;
     pumpState4 = 0;
     
-    activePeriod1 = 70;
-    activePeriod2 = 70;
-    activePeriod3 = 70;
-    activePeriod4 = 70;
+    activePeriod1 = 60;
+    activePeriod2 = 60;
+    activePeriod3 = 60;
+    activePeriod4 = 60;
     
-    inactivePeriod1 = 12;
-    inactivePeriod2 = 12;
-    inactivePeriod3 = 12;
-    inactivePeriod4 = 12;
+    inactivePeriod1 = 10;
+    inactivePeriod2 = 10;
+    inactivePeriod3 = 10;
+    inactivePeriod4 = 10;
     
     //We are gonna assume that TRISA is set correctly before
     
@@ -79,7 +81,7 @@ void runPumpMaintenance() {
         
         if(pumpState2) {
             //requires pump to be on and we are turning it off
-            incTime(&pumpT2, 0, 0, 0, inactivePeriod2, 0);
+            incTime(&pumpT2, 0, 0, 0,inactivePeriod2, 0);
         } else {
             //Pump is off we turn it on for active period
            incTime(&pumpT2, 0, activePeriod2, 0, 0, 0); 
@@ -115,4 +117,38 @@ void runPumpMaintenance() {
     LATBbits.LATB4 = pumpState3;
     LATAbits.LATA4 = pumpState4;
 
+}
+
+void setWaterFreq(uint8_t pump, uint8_t hours) {
+    switch(pump) {
+        case 1:
+            inactivePeriod1 = hours;
+            break;
+        case 2:
+            inactivePeriod2 = hours;
+            break;
+        case 3:
+            inactivePeriod3 = hours;
+            break;
+        case 4:
+            inactivePeriod4 = hours;
+            break;
+    }
+}
+    
+void setWaterRate(uint8_t pump, uint8_t seconds) {
+    switch(pump) {
+        case 1:
+            activePeriod1 = seconds;
+            break;
+        case 2:
+            activePeriod2 = seconds;
+            break;
+        case 3:
+            activePeriod3 = seconds;
+            break;
+        case 4:
+            activePeriod4 = seconds;
+            break;
+    } 
 }

@@ -25,6 +25,10 @@ extern "C" {
     
     void runPumpMaintenance();
     
+    void setWaterFreq(uint8_t pump, uint8_t hours);
+    
+    void setWaterRate(uint8_t pump, uint8_t seconds);
+    
     
     
     

@@ -136,14 +136,14 @@ void lcd_createChar(unsigned char location, const unsigned char charmap[]) {
 
 void lcd_init(void) {   
     // Configure PIC I2C Hardware
-    I2C1CONbits.I2CEN = 0;          
-    TRISBbits.TRISB8 = 1;    // SCL Input 
-    TRISBbits.TRISB9 = 1;    // SDA Input 
-    I2C1BRG = I2C1BRG_VALUE;  
-    IFS1bits.MI2C1IF = 0;          
-    IEC1bits.MI2C1IE = 0;       
-    I2C1STAT = 0;               
-    I2C1CONbits.I2CEN = 1;          
+    //I2C1CONbits.I2CEN = 0;          
+    //TRISBbits.TRISB8 = 1;    // SCL Input 
+    //TRISBbits.TRISB9 = 1;    // SDA Input 
+    //I2C1BRG = I2C1BRG_VALUE;  
+    //IFS1bits.MI2C1IF = 0;          
+    //IEC1bits.MI2C1IE = 0;       
+    //I2C1STAT = 0;               
+    //I2C1CONbits.I2CEN = 1;          
 
     __delay_ms(50); // Wait for LCD power to stabilize
 
